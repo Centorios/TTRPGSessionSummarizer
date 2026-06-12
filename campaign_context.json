@@ -1,29 +1,149 @@
 {
-    "campaign_name": "Tenra: Tercera temporada",
+  "campaign_name": "La Mina Perdida de Phandelver",
 
-    "players": [
-        ""
-    ],
+  "players": [
+    "Nicolas",
+    "Lis",
+    "Tomas",
+    "Belén",
+    "Franco"
+  ],
 
-    "characters": [
-        {
-            "player": "",
-            "character": "",
-            "role": ""
-        }
-    ],
+  "characters": [
+    {
+            "player": "Nicolas",
+            "character": "Cenith Jergsen",
+            "role": "Paladin in trials of an old sun elves dynasty"
+    },
+    {
+            "player": "Belén",
+            "character": "Agatha Wolf",
+            "role": "Newborn human dhampyr ex noblewoman of a merchant family with magical powers"
+    },
+    {
+            "player": "Tomas",
+            "character": "Horus",
+            "role": "Ex orc slave gladiator barbarian"
+    },
+    {
+            "player": "Franco",
+            "character": "Sanael Niravar",
+            "role": "Newborn dark elf dhampyr rogue exiled from his city Menzoberranzan"
+    },
+    {
+            "player": "Lis",
+            "character": "Ma'ki Le Cuca",
+            "role": "Orphan tabaxi adopted by humans with strong holy magic affinity, cleric of the goddess of the selune"
+    }
+  ],
+  "locations": [
+    "Phandalin",
+    "Neverwinter",
+    "Sendero de Triboar",
+    "Guarida Cragmaw",
+    "Castillo Cragmaw",
+    "Wave Echo Cave",
+    "Mansión Tresendar",
+    "Escondite de los Capas Rojas",
+    "Pozo de la Lechuza Vieja",
+    "Wyvern Tor",
+    "Conyberry",
+    "Guarida de Agatha",
+    "Thundertree",
+    "Bosque de Neverwinter",
+    "Pico Agujahelada"
+  ],
 
-    "locations": [
-    ],
+  "npcs": [
+    "Gundren Buscapiedra",
+    "Sildar Hallwinter",
+    "Nundro Buscapiedra",
+    "Tharden Buscapiedra",
+    "Harbin Wester",
+    "Hermana Garaele",
+    "Qelline Alderleaf",
+    "Linene Graywind",
+    "Halia Thornton",
+    "Daran Edermath",
+    "Reidoth",
+    "Agatha",
+    "Rey Grol",
+    "Palo de vidrio",
+    "Iarno Albrek",
+    "Nezznar",
+    "La Araña Negra",
+    "Colmillo Venenoso",
+    "Yeemik",
+    "Klarg"
+  ],
 
-    "npcs": [
+  "factions": [
+    "Alianza de los Señores",
+    "Zhentarim",
+    "Capas Rojas",
+    "Goblins Cragmaw",
+    "Tribu Cragmaw",
+    "Enclave Esmeralda",
+    "Orden del Guantelete",
+    "Arpistas"
+  ],
 
-    ],
+  "important_items": [
+    "Mapa de Wave Echo Cave",
+    "Lightbringer",
+    "Bastón de Defensa",
+    "Bastón de la Araña",
+    "Carta de la Araña Negra",
+    "Forja de Hechizos"
+  ],
 
-    "factions": [
-    ],
+  "monsters": [
+    "Goblin",
+    "Trasgo",
+    "Hobgoblin",
+    "Bugbear",
+    "Oso Lechuza",
+    "Orco",
+    "Zombi",
+    "Zombi de Ceniza",
+    "Dragón Verde Joven"
+  ],
 
-    "important_items": [
+  "major_plot_threads": [
+    "Encontrar a Gundren Buscapiedra",
+    "Descubrir la ubicación de Wave Echo Cave",
+    "Derrotar a la Araña Negra",
+    "Restaurar la Forja de Hechizos",
+    "Investigar a los Capas Rojas",
+    "Rescatar a los hermanos Buscapiedra",
+    "Detener las actividades de los Cragmaw",
+    "Descubrir los secretos de la Cueva del Eco de las Olas"
+  ],
 
-    ]
+  "known_terms": [
+    "Phandelver",
+    "Phandalin",
+    "Wave Echo Cave",
+    "Forja de Hechizos",
+    "Buscapiedra",
+    "Cragmaw",
+    "Capas Rojas",
+    "Zhentarim",
+    "Arpistas",
+    "Neverwinter",
+    "Sendero de Triboar",
+    "Glasstaff",
+    "Nezznar",
+    "Araña Negra",
+    "Venomfang",
+    "Agatha",
+    "Thundertree",
+    "Reidoth",
+    "Sildar Hallwinter",
+    "Gundren Buscapiedra",
+    "Nundro Buscapiedra",
+    "Iarno Albrek",
+    "Klarg",
+    "Yeemik"
+  ]
 }
