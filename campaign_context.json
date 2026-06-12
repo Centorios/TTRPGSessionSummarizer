@@ -2,28 +2,87 @@
     "campaign_name": "Tenra: Tercera temporada",
 
     "players": [
-        ""
+        "Junki",
+        "Nicolas",
+        "Furia",
+        "Darpi"
     ],
 
     "characters": [
         {
-            "player": "",
-            "character": "",
-            "role": ""
+            "player": "Junki",
+            "character": "Nakai",
+            "role": "Ken, el samurai definitivo"
+        },
+        {
+            "player": "Nicolas",
+            "character": "Vernyl Sassi",
+            "role": "Escolta y Guardian de secretos"
+        },
+        {
+            "player": "Furia",
+            "character": "Kyouma",
+            "role": "Monje Maldito"
+        },
+        {
+            "player": "Darpi",
+            "character": "Kazuo",
+            "role": "samurai retirado"
         }
     ],
 
     "locations": [
+        "Yoshima norte",
+        "Izumo oeste",
+        "Izumo este",
+        "Junglas de Izumo",
+        "Shima",
+        "Yoshima sur",
+        "Edo",
+        "Yoshima central",
+        "islas sadamune",
+        "valle prohibido de Izumo",
+        "Desiertos de Izumo",
+        "Montañas de Izumo",
+        "Tokiwa",
+        "Desierto de Tokiwa"
     ],
 
     "npcs": [
-
+        "Evandrin",
+        "Purvan Sul",
+        "Vespin Chloras",
+        "Eldamir the Wise"
     ],
 
     "factions": [
+        "Shogunato Machi",
+        "Shogunato Izumo del Oeste",
+        "Clan Ueno",
+        "Clan Sadamune",
+        "Clan del Sol",
+        "Shogunato Towika",
+        "Shogunato Shima",
+        "Clan de la Luna",
+        "Consejado de Edo",
+        "Clan Kumabe",
+        "Shinigamis",
+        "Clanes Shinobi de Hano-Mani",
+        "Alquimistas",
+        "Clanes Onmyo de Hano-Mani",
+        "Clanes Oni",
+        "Familia Oni de las Jungla",
+        "Familia Oni de las Aguas",
+        "Familia Oni de los Desiertos",
+        "Familia Oni de las Montañas",
+        "Familia Oni de las Praderas",
+        "Familia Oni de los Cielos"
     ],
 
     "important_items": [
-
+        "Miticario",
+        "Excalibur",
+        "Kusanagi",
+        "Beast Slayer"
     ]
 }
