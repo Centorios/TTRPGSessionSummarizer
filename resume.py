@@ -74,6 +74,17 @@ def ask_ollama(model, prompt):
 
     return output
 
+# ========================================
+# LOAD CAMPAIGN CONTEXT
+# ========================================
+
+with open(
+    "campaign_context.json",
+    "r",
+    encoding="utf-8"
+) as f:
+    campaign_context = json.load(f)
+
 # =====================================================
 # LOAD TRANSCRIPT
 # =====================================================
@@ -149,6 +160,9 @@ Rules:
 - Be concise.
 - Output markdown only.
 
+Campaign context:
+{json.dumps(campaign_context, indent=2, ensure_ascii=False)}
+
 Return:
 
 # Major Events
@@ -214,6 +228,9 @@ from a complete tabletop RPG session.
 
 Merge everything into a professional
 campaign recap.
+
+Campaign context:
+{json.dumps(campaign_context, indent=2, ensure_ascii=False)}
 
 Return:
 
