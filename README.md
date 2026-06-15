@@ -1,369 +1,324 @@
-# TTRPGSessionSummarizer
-Local AI pipepile for TTRPG transcript and summarization
+# TTRPG Session Summarizer
 
+Offline AI pipeline for transforming long tabletop RPG sessions into structured campaign notes.
 
-This project provides a fully local pipeline for:
+The project combines **Faster-Whisper**, **PyAnnote**, **Ollama**, and **Qwen** to automatically:
 
-* Multi-speaker RPG session transcription
-* Speaker timeline generation
-* Campaign report generation
-* Long-term campaign memory extraction
+* Transcribe several hours of gameplay
+* Identify different speakers
+* Align speakers with transcript segments
+* Merge the entire session chronologically
+* Produce campaign-quality summaries using local LLMs
 
-The entire workflow runs locally using:
+Everything runs locally after the required models are downloaded.
 
-* Faster-Whisper
-* NVIDIA CUDA
-* cuDNN
+---
+
+# Pipeline
+
+```
+Recording (.m4a / .mp3 / .wav)
+            │
+            ▼
+     transcribe.py
+            │
+            ▼
+ Transcript with timestamps
+            │
+            ▼
+     diarization.py
+            │
+            ▼
+ Speaker timeline
+            │
+            ▼
+      alignment.py
+            │
+            ▼
+ merged_timeline.json
+            │
+            ▼
+       resume.py
+            │
+            ▼
+ campaign_report.md
+```
+
+---
+
+# Features
+
+* Local speech recognition using Faster-Whisper
+* Automatic language detection
+* Word timestamps
+* Speaker diarization
+* Speaker alignment
+* Context-aware campaign summaries
+* Chunked summarization for extremely long sessions
+* Final campaign report generated with local LLMs
+* No cloud APIs required (except first-time Hugging Face model download)
+
+---
+
+# Requirements
+
+Recommended:
+
+* Python 3.11
+* NVIDIA GPU (CUDA)
+* 12GB+ VRAM recommended
 * Ollama
-* Qwen3
-
-No cloud APIs are required.
-
----
-
-# Hardware Requirements
-
-Recommended:
-
-* NVIDIA RTX 3080 (10GB+) or better
-* 32GB+ RAM (64GB recommended)
-* Windows 10/11
-* Python 3.8+
-
-Minimum tested:
-
-* RTX 3080 10GB
-* 16GB RAM
+* FFmpeg
+* Hugging Face account (for PyAnnote)
 
 ---
 
-# Installing CUDA
+# Installation
 
-Install CUDA 12.8:
+## 1. Install Python
 
-https://developer.nvidia.com/cuda-12-8-0-download-archive
-
-Default installation path:
-
-```text
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.8
-```
-
-Verify installation:
-
-```powershell
-nvidia-smi
-nvcc --version
-```
+Python 3.11 is recommended.
 
 ---
 
-# Installing cuDNN
+## 2. Install PyTorch (CUDA)
 
-Download cuDNN 9 for CUDA 12.x:
+Follow the official installation guide:
 
-https://developer.nvidia.com/cudnn
-
-Install to:
-
-```text
-C:\Program Files\NVIDIA\CUDNN\
-```
-
-Example path:
-
-```text
-C:\Program Files\NVIDIA\CUDNN\v9.x\bin\12.8\x64
-```
-
----
-
-# Configure Environment Variables
-
-Add both directories to PATH:
-
-```text
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.8\bin
-
-C:\Program Files\NVIDIA\CUDNN\v9.x\bin\12.8\x64
-```
-
-Permanent PowerShell script:
-
-```powershell
-$cuda = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.8\bin"
-$cudnn = "C:\Program Files\NVIDIA\CUDNN\v9.x\bin\12.8\x64"
-
-$current = [Environment]::GetEnvironmentVariable(
-    "Path",
-    "User"
-)
-
-if ($current -notlike "*$cuda*") {
-    $current += ";$cuda"
-}
-
-if ($current -notlike "*$cudnn*") {
-    $current += ";$cudnn"
-}
-
-[Environment]::SetEnvironmentVariable(
-    "Path",
-    $current,
-    "User"
-)
-
-Write-Host "PATH updated."
-```
-
-Open a new PowerShell after running it.
-
----
-
-# Python Setup
-
-Create virtual environment:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-Install dependencies:
-
-```powershell
-pip install faster-whisper
-pip install requests
-```
-
-Verify CUDA access:
-
-```powershell
-python -c "import torch; print(torch.cuda.is_available())"
-```
-
----
-
-# Whisper Model
-
-Recommended:
-
-```python
-MODEL_NAME = "large-v3"
-DEVICE = "cuda"
-COMPUTE_TYPE = "float16"
-```
-
-Transcription settings:
-
-```python
-segments, info = model.transcribe(
-    str(audio_file),
-    task="transcribe",
-    temperature=0.1,
-    beam_size=5,
-    word_timestamps=True,
-    vad_filter=True,
-    condition_on_previous_text=False
-)
-```
-
-Notes:
-
-* `temperature=0.1` improves consistency.
-* `condition_on_previous_text=False` avoids repetition loops.
-* `large-v3` produced the best results during testing.
-
----
-
-# Audio Structure
-
-Input:
-
-```text
-audio/
-├── player1.mp3
-├── player2.mp3
-├── player3.mp3
-├── dm.mp3
-```
-
-Output:
-
-```text
-transcripts/
-├── player1.json
-├── player1.txt
-├── player2.json
-├── merged_timeline.json
-└── merged_timeline.txt
-```
-
----
-
-# Installing Ollama
-
-Download:
-
-https://ollama.com
+https://pytorch.org/get-started/locally/
 
 Verify:
 
-```powershell
-ollama --version
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+Expected:
+
+```
+True
 ```
 
 ---
 
-# Download Qwen
+## 3. Install project dependencies
 
-Fast summarization:
-
-```powershell
-ollama pull qwen3:8b
+```bash
+pip install -r requirements.txt
 ```
 
-High quality final report:
+---
 
-```powershell
+## 4. Install Ollama
+
+Install Ollama from:
+
+https://ollama.com
+
+Download the recommended models:
+
+```bash
+ollama pull qwen3:8b
 ollama pull qwen3:14b
 ```
 
 ---
 
-# Recommended Workflow
+## 5. Hugging Face
 
-Step 1:
+Create a free account.
 
-```text
-Audio Files
-↓
-Whisper
-↓
-merged_timeline.json
-```
+Accept the license for:
 
-Step 2:
+* pyannote/speaker-diarization-community-1
 
-```text
-merged_timeline.json
-↓
-Qwen3:8B
-↓
-Chunk Reports
-```
+Create an Access Token and place it inside:
 
-Step 3:
-
-```text
-Chunk Reports
-↓
-Qwen3:14B
-↓
-Final Campaign Report
+```python
+HF_TOKEN = "your_token_here"
 ```
 
 ---
 
-# Campaign Context
+# Folder structure
+
+```
+audio/
+transcripts/
+chunk_summaries/
+
+transcribe.py
+diarization.py
+alignment.py
+resume.py
+
+campaign_context.json
+campaign_report.md
+```
+
+---
+
+# Processing workflow
+
+## 1
+
+Place recordings inside:
+
+```
+audio/
+```
+
+Supported formats include:
+
+* m4a
+* mp3
+* wav
+* flac
+* ogg
+
+---
+
+## 2
+
+Run transcription:
+
+```bash
+python transcribe.py
+```
+
+Outputs:
+
+```
+transcripts/
+```
+
+---
+
+## 3
+
+Run diarization:
+
+```bash
+python diarization.py
+```
+
+Outputs:
+
+```
+diarization.json
+```
+
+---
+
+## 4
+
+Align transcript with speakers:
+
+```bash
+python alignment.py
+```
+
+Outputs:
+
+```
+merged_timeline.json
+```
+
+---
+
+## 5
+
+Configure campaign context:
+
+```
+campaign_context.json
+```
 
 Example:
 
-```python
-campaign_context = {
-    "campaign_name": "Fear & Hunger Argentina",
-    "players": [
-        "Alejo",
-        "Juan"
-    ],
-    "characters": [
-        "Inspector Salvatierra",
-        "Father Ignacio"
-    ],
-    "locations": [
-        "Línea A",
-        "Plaza Miserere"
-    ],
-    "npcs": [
-        "El Guardavía"
-    ],
-    "factions": [
-        "Culto de Alll-Mer"
-    ],
-    "important_items": [
-        "Llave de Bronce"
-    ]
+```json
+{
+  "campaign_name": "Lost Mine of Phandelver",
+  "players": [
+    "Alice",
+    "Bob",
+    "Carlos"
+  ],
+  "characters": [
+    {
+      "player": "Alice",
+      "character": "Thorin",
+      "role": "Fighter"
+    }
+  ],
+  "locations": [
+    "Phandalin",
+    "Wave Echo Cave"
+  ],
+  "npcs": [
+    "Gundren Rockseeker",
+    "Sildar Hallwinter"
+  ],
+  "factions": [
+    "Lords' Alliance"
+  ],
+  "important_items": [
+    "Map to Wave Echo Cave"
+  ]
 }
 ```
 
-This context is injected into every LLM prompt to improve recognition of fantasy names, NPCs, locations, and factions.
+Providing campaign context helps the LLM recognize names correctly and improves summary quality.
 
 ---
 
-# Future Improvements
+## 6
 
-Planned features:
+Generate the campaign report:
 
-* Campaign memory database
-* Automatic NPC extraction
-* Automatic location extraction
-* Quest tracking
-* Relationship tracking
-* Storyboard generation
-* AI-assisted session recap videos
+```bash
+python resume.py
+```
 
----
+Produces:
 
-# Troubleshooting
-
-## cublas64_12.dll missing
-
-Usually caused by:
-
-* CUDA not installed
-* CUDA PATH missing
-
-Verify:
-
-```powershell
-where cublas64_12.dll
+```
+campaign_report.md
 ```
 
 ---
 
-## GPU not being used
-
-Check:
-
-```powershell
-nvidia-smi
-```
-
-During transcription:
-
-```text
-GPU Utilization > 50%
-```
-
-should be visible.
-
----
-
-## Ollama extremely slow
-
-Check loaded model:
-
-```powershell
-ollama ps
-```
+# Models
 
 Recommended:
 
-```text
-Chunk processing -> qwen3:8b
-Final merge -> qwen3:14b
-```
-
-Using qwen3:14b for every chunk significantly increases processing time.
+| Purpose         | Model     |
+| --------------- | --------- |
+| Chunk summaries | qwen3:8b  |
+| Final report    | qwen3:14b |
 
 ---
+
+# Current capabilities
+
+* Automatic transcription
+* Speaker diarization
+* Speaker alignment
+* Timeline reconstruction
+* Session summaries
+* Campaign reports
+
+---
+
+# Future ideas
+
+* Automatic speaker naming
+* Character detection
+* Session memory across campaigns
+* Vector database for campaign history
+* RAG support
+* NPC relationship graphs
+* Interactive web interface
+
+```
+```

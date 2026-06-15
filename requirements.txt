@@ -1,0 +1,30 @@
+```text
+# ==========================================
+# TTRPG Session Summarizer Requirements
+# Recommended Python: 3.11
+# ==========================================
+
+# Speech-to-text
+faster-whisper>=1.1.0
+
+# Speaker diarization
+pyannote.audio>=4.0
+
+# LLM communication
+requests>=2.32
+
+# HuggingFace authentication
+huggingface_hub>=0.30
+
+# Numerical dependencies
+numpy
+
+# Progress bars
+tqdm
+
+# PyTorch
+# Install the CUDA version manually from:
+# https://pytorch.org/get-started/locally/
+torch
+torchaudio
+```
